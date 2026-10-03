@@ -1,11 +1,11 @@
 package com.shiftbypass.client.mixin;
 
 import com.shiftbypass.client.ShiftBypassState;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.input.KeyEvent;
-import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -42,10 +42,10 @@ public abstract class KeyboardHandlerMixin {
 			return;
 		}
 		// Press events only: releases are handled fine by vanilla.
-		if (action != GLFW.GLFW_PRESS && action != GLFW.GLFW_REPEAT) {
+		if (action != InputConstants.PRESS && action != InputConstants.REPEAT) {
 			return;
 		}
-		if (keyEvent.key() != GLFW.GLFW_KEY_LEFT_SHIFT && keyEvent.key() != GLFW.GLFW_KEY_RIGHT_SHIFT) {
+		if (keyEvent.key() != InputConstants.KEY_LSHIFT && keyEvent.key() != InputConstants.KEY_RSHIFT) {
 			return;
 		}
 		// No screen open - vanilla handles the key exactly as configured, nothing to bypass.
@@ -58,13 +58,13 @@ public abstract class KeyboardHandlerMixin {
 		// Ignore rebinds to mouse buttons or unknown keys: only real keyboard keys
 		// can be driven from a keyboard event.
 		if (shift.isUnbound()
-				|| ((KeyMappingAccessor) (Object) shift).shiftbypass$key().getType() != com.mojang.blaze3d.platform.InputConstants.Type.KEYSYM) {
+				|| ((KeyMappingAccessor) (Object) shift).shiftbypass$key().getType() != InputConstants.Type.KEYBOARD) {
 			return;
 		}
 
 		// GLFW_REPEAT only matters in hold mode; in toggle mode setDown(true) would
 		// toggle the mapping a second time, so repeats are dropped there.
-		boolean holdMode = !shift.isDown() || action == GLFW.GLFW_PRESS;
+		boolean holdMode = !shift.isDown() || action == InputConstants.PRESS;
 		if (holdMode) {
 			shift.setDown(true);
 		}
