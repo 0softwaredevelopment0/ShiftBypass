@@ -1,5 +1,7 @@
 # ShiftBypass
 
+![Latest release](https://img.shields.io/github/v/release/0softwaredevelopment0/ShiftBypass)
+
 A tiny client-side Fabric mod for Minecraft **26.2** that removes the vanilla rule
 which stops you from sneaking while you are "busy" - chatting, browsing your
 inventory, using a crafting table, furnace, chest, etc.
